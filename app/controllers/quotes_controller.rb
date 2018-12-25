@@ -12,6 +12,10 @@ class QuotesController < ApplicationController
 	@quote = Quote.new
 	end
 	
+	def edit
+	@quote = Quote.find(params[:id])
+	end
+	
 def create
   @quote = Quote.new(quote_params)
  
@@ -22,10 +26,14 @@ def create
 	end
 end
 
-def destroy
-  @quote = Quote.find(params[:id])
-  @quote.destroy
-  redirect_to quotes_path
+def update
+	@quote = Quote.find(params[:id])
+	 
+	if @quote.update(quote_params)
+		redirect_to @quote
+	else
+		render 'edit'
+	end
 end
  
 private
